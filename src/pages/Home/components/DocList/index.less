@@ -1,3 +1,25 @@
 .docList {
   //max-width: 1200px;
+  :global {
+    .ant-list-item:hover {
+      background-color: rgba(0, 0, 0, 0.01);
+      cursor: pointer;
+    }
+  }
+  .icon:hover {
+    color: #1890ff;
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  .title {
+    color: #2e3135;
+    font-weight: 600;
+    font-size: 1.4rem;
+    line-height: 1.2;
+  }
+
+  .title:hover {
+    text-decoration: underline;
+  }
 }

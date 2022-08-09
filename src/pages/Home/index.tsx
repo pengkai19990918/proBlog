@@ -1,11 +1,12 @@
 import DocList from '@/pages/Home/components/DocList';
 import { Col, Row } from 'antd';
 import React from 'react';
+import styles from './index.less';
 
 const Home: React.FC = () => {
   return (
-    <Row justify={'center'}>
-      <Col span={12}>
+    <Row className={styles.row} justify={'center'} style={{ background: '#f4f5f5' }}>
+      <Col span={12} className={styles.col}>
         <DocList />
       </Col>
     </Row>
