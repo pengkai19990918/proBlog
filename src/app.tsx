@@ -47,6 +47,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
+    contentStyle: { backgroundColor: '#f4f5f5', margin: '0' },
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     // waterMarkProps: {
@@ -55,7 +56,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     footerRender: () => false,
     onPageChange: () => {
       const { location } = history;
-      console.log(history);
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== loginPath) {
         history.push(loginPath);

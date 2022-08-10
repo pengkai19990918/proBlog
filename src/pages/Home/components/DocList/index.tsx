@@ -1,4 +1,5 @@
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
+import { history } from '@umijs/max';
 import { Avatar, List, Space } from 'antd';
 import React from 'react';
 import styles from './index.less';
@@ -42,6 +43,9 @@ const DocList: React.FC<DocListProps> = (props) => {
       renderItem={(item) => (
         <List.Item
           key={item.title}
+          onClick={() => {
+            history.push('/detail');
+          }}
           actions={[
             <IconText
               icon={<StarOutlined className={styles.icon} />}
@@ -63,7 +67,6 @@ const DocList: React.FC<DocListProps> = (props) => {
           <List.Item.Meta
             avatar={<Avatar src={item.avatar} />}
             title={<a href={item.href}>{item.name}</a>}
-            // description={item.description}
           />
           <p>
             <a>

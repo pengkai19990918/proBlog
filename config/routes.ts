@@ -26,6 +26,11 @@
     component: './Home',
   },
   {
+    path: '/detail',
+    icon: 'smile',
+    component: './DocDetail',
+  },
+  {
     name: 'list.table-list',
     icon: 'table',
     path: '/list',

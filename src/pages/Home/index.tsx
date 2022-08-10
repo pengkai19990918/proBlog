@@ -5,7 +5,7 @@ import styles from './index.less';
 
 const Home: React.FC = () => {
   return (
-    <Row className={styles.row} justify={'center'} style={{ background: '#f4f5f5' }}>
+    <Row className={styles.row} justify={'center'}>
       <Col span={12} className={styles.col}>
         <DocList />
       </Col>
