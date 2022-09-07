@@ -14,12 +14,6 @@
     ],
   },
   {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-  },
-  {
     path: '/home',
     name: 'home',
     icon: 'smile',

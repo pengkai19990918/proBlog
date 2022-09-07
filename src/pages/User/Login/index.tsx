@@ -159,6 +159,7 @@ const Login: React.FC = () => {
               />
               <ProFormText.Password
                 name="password"
+                initialValue={'ant.design'}
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined className={styles.prefixIcon} />,
