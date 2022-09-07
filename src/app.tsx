@@ -11,7 +11,7 @@ import { history, Link } from '@umijs/max';
 import Cookies from 'js-cookie';
 import type { RequestOptionsInit } from 'umi-request';
 import defaultSettings from '../config/defaultSettings';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import { currentUser as queryCurrentUser } from './services/egg-blog/api';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -110,7 +110,6 @@ const getHeaders = (options: RequestOptionsInit) => {
   const localeHeaders = {
     'x-csrf-token': csrftoken, // csrftoken eggjs
     authorization: getToken(), // Token
-    'MANAGE-TOKEN': getToken(), // Token
     language: getLocale(), // 当前语言
   };
 

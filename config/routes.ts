@@ -31,12 +31,6 @@
     component: './DocDetail',
   },
   {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
-  },
-  {
     path: '/',
     redirect: '/home',
   },
