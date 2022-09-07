@@ -29,3 +29,12 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
     ...(options || {}),
   });
 }
+
+/** 登录接口 POST /api/user/register */
+export async function register(body: API.LoginParams, options?: { [key: string]: any }) {
+  return request<any>('/api/user/register', {
+    method: HttpMethod.POST,
+    data: body,
+    ...(options || {}),
+  });
+}

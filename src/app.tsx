@@ -14,7 +14,7 @@ import defaultSettings from '../config/defaultSettings';
 import { currentUser as queryCurrentUser } from './services/egg-blog/api';
 
 const isDev = process.env.NODE_ENV === 'development';
-const loginPath = '/user/login';
+const homePath = '/home';
 const DEFAULT_TIMEOUT = 2 * 60 * 1000;
 
 /**
@@ -31,12 +31,12 @@ export async function getInitialState(): Promise<{
       const msg = await queryCurrentUser();
       return msg.data;
     } catch (error) {
-      history.push(loginPath);
+      history.push(homePath);
     }
     return undefined;
   };
   // 如果不是登录页面，执行
-  if (history.location.pathname !== loginPath) {
+  if (history.location.pathname !== homePath) {
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
@@ -63,8 +63,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        history.push(loginPath);
+      if (!initialState?.currentUser && location.pathname !== homePath) {
+        history.push(homePath);
       }
     },
     links: isDev

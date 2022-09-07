@@ -1,11 +1,13 @@
+import Login from '@/pages/User/Login';
+import Register from '@/pages/User/Register';
 import { outLogin } from '@/services/egg-blog/api';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
-import { Avatar, Menu, Spin } from 'antd';
+import { Avatar, Button, Menu, Space, Spin } from 'antd';
 import type { ItemType } from 'antd/lib/menu/hooks/useItems';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
@@ -36,6 +38,9 @@ const loginOut = async () => {
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
 
+  const [loginFormVisible, handleLoginFormVisible] = useState<boolean>(false);
+  const [registerFormVisible, handleRegisterFormVisible] = useState<boolean>(false);
+
   const onMenuClick = useCallback(
     (event: MenuInfo) => {
       const { key } = event;
@@ -65,9 +70,42 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     return loading;
   }
 
+  const login = (
+    <>
+      <Space>
+        <Button
+          onClick={() => {
+            handleLoginFormVisible(true);
+          }}
+        >
+          登录
+        </Button>
+        <Button
+          onClick={() => {
+            handleRegisterFormVisible(true);
+          }}
+        >
+          注册
+        </Button>
+      </Space>
+      <Login
+        visible={loginFormVisible}
+        onCancel={() => {
+          handleLoginFormVisible(false);
+        }}
+      />
+      <Register
+        visible={registerFormVisible}
+        onCancel={() => {
+          handleRegisterFormVisible(false);
+        }}
+      />
+    </>
+  );
+
   const { currentUser } = initialState;
   if (!currentUser) {
-    return loading;
+    return login;
   }
 
   const menuItems: ItemType[] = [
