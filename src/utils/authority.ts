@@ -43,6 +43,10 @@ export const setToken = (token: string, callback?: () => void): void => {
   callback?.();
 };
 
+export const removeToken = (): void => {
+  localStorage.removeItem(TOKEN_KEY);
+};
+
 export const getUserId = (): string | null => {
   return localStorage.getItem(USER_ID);
 };

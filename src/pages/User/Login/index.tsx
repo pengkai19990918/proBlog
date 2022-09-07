@@ -58,6 +58,7 @@ const Login: React.FC<loginProps> = (props) => {
         setToken(msg.data);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
+        onCancel();
         history.push(urlParams.get('redirect') || '/');
         return;
       }

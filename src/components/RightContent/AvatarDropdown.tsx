@@ -1,6 +1,7 @@
 import Login from '@/pages/User/Login';
 import Register from '@/pages/User/Register';
 import { outLogin } from '@/services/egg-blog/api';
+import { removeToken } from '@/utils/authority';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';
 import { Avatar, Button, Menu, Space, Spin } from 'antd';
@@ -20,14 +21,15 @@ export type GlobalHeaderRightProps = {
  */
 const loginOut = async () => {
   await outLogin();
+  removeToken();
   const { search, pathname } = history.location;
   const urlParams = new URL(window.location.href).searchParams;
   /** 此方法会跳转到 redirect 参数所在的位置 */
   const redirect = urlParams.get('redirect');
   // Note: There may be security issues, please note
-  if (window.location.pathname !== '/user/login' && !redirect) {
+  if (window.location.pathname !== '/' && !redirect) {
     history.replace({
-      pathname: '/user/login',
+      pathname: '/',
       search: stringify({
         redirect: pathname + search,
       }),
