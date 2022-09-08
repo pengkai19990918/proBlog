@@ -25,6 +25,11 @@
     component: './DocDetail',
   },
   {
+    path: '/write',
+    icon: 'smile',
+    component: './WriteDoc',
+  },
+  {
     path: '/',
     redirect: '/home',
   },

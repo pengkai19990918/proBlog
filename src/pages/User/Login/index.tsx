@@ -133,24 +133,17 @@ const Login: React.FC<loginProps> = (props) => {
             />
             <ProFormText.Password
               name="password"
-              initialValue={'ant.design'}
               fieldProps={{
                 size: 'large',
                 prefix: <LockOutlined className={styles.prefixIcon} />,
               }}
               placeholder={formatMessage({
                 id: 'pages.login.password.placeholder',
-                defaultMessage: '密码: ant.design',
               })}
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.password.required"
-                      defaultMessage="请输入密码！"
-                    />
-                  ),
+                  message: <FormattedMessage id="pages.login.password.required" />,
                 },
               ]}
             />

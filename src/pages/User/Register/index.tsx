@@ -1,5 +1,5 @@
 import { register } from '@/services/egg-blog/api';
-import { Button, Form, Input, Modal } from 'antd';
+import { Button, Form, Input, message, Modal } from 'antd';
 import React from 'react';
 
 type registerFormProps = {
@@ -36,7 +36,13 @@ const Register: React.FC<registerFormProps> = (props) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
-    await register(values);
+    try {
+      await register(values);
+      onCancel();
+      message.success('注册成功');
+    } catch (e) {
+      message.error(`注册失败`);
+    }
   };
 
   return (
@@ -100,9 +106,7 @@ const Register: React.FC<registerFormProps> = (props) => {
                 if (!value || getFieldValue('password') === value) {
                   return Promise.resolve();
                 }
-                return Promise.reject(
-                  new Error('The two passwords that you entered do not match!'),
-                );
+                return Promise.reject(new Error('两次输入密码不一致！'));
               },
             }),
           ]}
@@ -111,7 +115,7 @@ const Register: React.FC<registerFormProps> = (props) => {
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Register
+            开始注册
           </Button>
         </Form.Item>
       </Form>

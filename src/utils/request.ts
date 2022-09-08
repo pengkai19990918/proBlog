@@ -2,11 +2,10 @@
 import { getLocale } from '@@/plugin-locale/localeExports';
 import { notification } from 'antd';
 import Cookies from 'js-cookie';
-import type { RequestInterceptor, RequestOptionsInit } from 'umi-request';
-import { extend } from 'umi-request';
-import { getToken, setToken } from './authority';
+import type { RequestOptionsInit } from 'umi-request';
+import { getToken } from './authority';
 
-const DEFAULT_TIMEOUT = 2 * 60 * 1000;
+export const DEFAULT_TIMEOUT = 2 * 60 * 1000;
 export const normalResponse = (response: any) => response && !(response instanceof Response);
 
 const codeMessage: Record<number, string> = {
@@ -31,7 +30,7 @@ const codeMessage: Record<number, string> = {
  * @zh-CN 异常处理程序
  * @en-US Exception handler
  */
-const errorHandler = (error: { response: Response }): Response => {
+export const errorHandler = (error: { response: Response }): Response => {
   const { response } = error;
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
@@ -49,16 +48,7 @@ const errorHandler = (error: { response: Response }): Response => {
   return response;
 };
 
-/**
- * @en-US Configure the default parameters for request
- * @zh-CN 配置request请求时的默认参数
- */
-const request = extend({
-  errorHandler, // default error handling
-  credentials: 'include', // Does the default request bring cookies
-});
-
-const getHeaders = (options: RequestOptionsInit) => {
+export const getHeaders = (options: RequestOptionsInit) => {
   const csrftoken = Cookies.get('csrfToken');
 
   const localeHeaders = {
@@ -74,31 +64,5 @@ const getHeaders = (options: RequestOptionsInit) => {
   } as HeadersInit;
 };
 
-const interceptorHeaders: RequestInterceptor = (url, options: RequestOptionsInit) => {
-  console.log(123123);
-  const headers = getHeaders(options);
-  // api请求拦截
-  return {
-    url,
-    options: {
-      ...options,
-      headers,
-      timeout: DEFAULT_TIMEOUT,
-      interceptors: true,
-    },
-  };
-};
-
-request.interceptors.request.use(interceptorHeaders, {});
-
-// response拦截器, 处理response
-request.interceptors.response.use(async (response) => {
-  const authorization = response.headers.get('authorization');
-  if (authorization) {
-    setToken(authorization);
-  }
-  return response;
-});
-
 // @ts-ignore
-export default request;
+// export default request;

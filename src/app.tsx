@@ -2,13 +2,13 @@
 import RightContent from '@/components/RightContent';
 import { getToken } from '@/utils/authority';
 import { getLocale } from '@@/plugin-locale';
-import type { RequestConfig } from '@@/plugin-request/request';
 import { LinkOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import Cookies from 'js-cookie';
+import type { RequestConfig } from 'umi';
 import type { RequestOptionsInit } from 'umi-request';
 import defaultSettings from '../config/defaultSettings';
 import { currentUser as queryCurrentUser } from './services/egg-blog/api';
@@ -35,8 +35,8 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
-  // 如果不是登录页面，执行
-  if (history.location.pathname !== homePath) {
+
+  if (getToken()) {
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
@@ -44,6 +44,16 @@ export async function getInitialState(): Promise<{
       settings: defaultSettings,
     };
   }
+
+  // 如果不是登录页面，执行
+  // if (history.location.pathname === homePath) {
+  //   const currentUser = await fetchUserInfo();
+  //   return {
+  //     fetchUserInfo,
+  //     currentUser,
+  //     settings: defaultSettings,
+  //   };
+  // }
   return {
     fetchUserInfo,
     settings: defaultSettings,
@@ -120,10 +130,10 @@ const getHeaders = (options: RequestOptionsInit) => {
 };
 
 export const request: RequestConfig = {
-  timeout: 1000,
+  timeout: DEFAULT_TIMEOUT,
   // other axios options you want
   errorConfig: {
-    errorHandler() {},
+    // errorHandler,
     errorThrower() {},
   },
   requestInterceptors: [
