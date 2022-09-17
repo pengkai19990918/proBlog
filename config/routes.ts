@@ -26,6 +26,7 @@
   },
   {
     path: '/write',
+    name: 'write',
     icon: 'smile',
     component: './WriteDoc',
   },

@@ -1,4 +1,4 @@
-import { register } from '@/services/egg-blog/api';
+import { register } from '@/services/egg-blog/login';
 import { Button, Form, Input, message, Modal } from 'antd';
 import React from 'react';
 
