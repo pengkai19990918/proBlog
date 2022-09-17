@@ -1,5 +1,4 @@
-import { login } from '@/services/egg-blog/api';
-import { getFakeCaptcha } from '@/services/egg-blog/login';
+import { getFakeCaptcha, login } from '@/services/egg-blog/login';
 import { setToken } from '@/utils/authority';
 import { formatMessage } from '@/utils/utils';
 import { LockOutlined, MobileOutlined, UserOutlined } from '@ant-design/icons';

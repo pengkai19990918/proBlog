@@ -1,6 +1,6 @@
 import Login from '@/pages/User/Login';
 import Register from '@/pages/User/Register';
-import { outLogin } from '@/services/egg-blog/api';
+import { outLogin } from '@/services/egg-blog/login';
 import { removeToken } from '@/utils/authority';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { history, useModel } from '@umijs/max';

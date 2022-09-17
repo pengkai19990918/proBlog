@@ -11,7 +11,7 @@ import Cookies from 'js-cookie';
 import type { RequestConfig } from 'umi';
 import type { RequestOptionsInit } from 'umi-request';
 import defaultSettings from '../config/defaultSettings';
-import { currentUser as queryCurrentUser } from './services/egg-blog/api';
+import { currentUser as queryCurrentUser } from './services/egg-blog/user';
 
 const isDev = process.env.NODE_ENV === 'development';
 // const homePath = '/home';
@@ -78,7 +78,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     // },
     footerRender: () => false,
     onPageChange: () => {
-      // 此处作为判断是否登录的依据把
       // const { location } = history;
       // 如果没有登录，重定向到 login
       // if (!initialState?.currentUser && location.pathname !== homePath) {
