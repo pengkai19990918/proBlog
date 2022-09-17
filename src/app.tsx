@@ -1,12 +1,12 @@
 // import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
-import { getToken } from '@/utils/authority';
+import { getToken, removeToken } from '@/utils/authority';
 import { getLocale } from '@@/plugin-locale';
 import { LinkOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import { SettingDrawer } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
-import { history, Link } from '@umijs/max';
+import { Link } from '@umijs/max';
 import Cookies from 'js-cookie';
 import type { RequestConfig } from 'umi';
 import type { RequestOptionsInit } from 'umi-request';
@@ -14,7 +14,7 @@ import defaultSettings from '../config/defaultSettings';
 import { currentUser as queryCurrentUser } from './services/egg-blog/api';
 
 const isDev = process.env.NODE_ENV === 'development';
-const homePath = '/home';
+// const homePath = '/home';
 const DEFAULT_TIMEOUT = 2 * 60 * 1000;
 
 /**
@@ -31,13 +31,20 @@ export async function getInitialState(): Promise<{
       const msg = await queryCurrentUser();
       return msg.data;
     } catch (error) {
-      history.push(homePath);
+      // history.push(homePath);
     }
     return undefined;
   };
 
   if (getToken()) {
     const currentUser = await fetchUserInfo();
+    if (!currentUser) {
+      removeToken();
+      return {
+        fetchUserInfo,
+        settings: defaultSettings,
+      };
+    }
     return {
       fetchUserInfo,
       currentUser,
@@ -71,11 +78,12 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     // },
     footerRender: () => false,
     onPageChange: () => {
-      const { location } = history;
+      // 此处作为判断是否登录的依据把
+      // const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== homePath) {
-        history.push(homePath);
-      }
+      // if (!initialState?.currentUser && location.pathname !== homePath) {
+      //   history.push(homePath);
+      // }
     },
     links: isDev
       ? [
