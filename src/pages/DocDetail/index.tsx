@@ -1,7 +1,6 @@
 import { MARKDOC } from '@/common';
 import { markedParse } from '@/utils';
 import { Col, Row, Space, Tag } from 'antd';
-import 'highlight.js/styles/base16/darcula.css';
 import moment from 'moment';
 import React from 'react';
 import styles from './index.less';
