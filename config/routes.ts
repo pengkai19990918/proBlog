@@ -20,7 +20,7 @@
     component: './Home',
   },
   {
-    path: '/detail',
+    path: '/detail/:id',
     icon: 'smile',
     component: './DocDetail',
   },

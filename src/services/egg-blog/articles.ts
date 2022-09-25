@@ -20,22 +20,25 @@ export async function getArticle(params: any) {
 export async function addArticle(params: any) {
   return request('/api/articles', {
     method: HttpMethod.POST,
-    params,
+    data: {
+      ...params,
+    },
   });
 }
 
 /** 更新文章 PUT /api/articles */
 export async function updateArticle(params: any) {
   return request('/api/articles', {
-    method: HttpMethod.POST,
-    params,
+    method: HttpMethod.PUT,
+    data: {
+      ...params,
+    },
   });
 }
 
 /** 删除文章 DELETE /api/articles */
 export async function removeArticle(params: any) {
-  return request('/api/articles', {
+  return request(`/api/articles/${params.id}`, {
     method: HttpMethod.DELETE,
-    params,
   });
 }

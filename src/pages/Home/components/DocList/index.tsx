@@ -1,4 +1,6 @@
+import { getArticlesAll } from '@/services/egg-blog/articles';
 import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
+import { ProList } from '@ant-design/pro-list';
 import { history } from '@umijs/max';
 import { Avatar, List, Space } from 'antd';
 import React from 'react';
@@ -8,16 +10,6 @@ type DocListProps = {
   list?: any[];
 };
 
-const data = Array.from({ length: 23 }).map((_, i) => ({
-  href: '#',
-  name: `part ${i}`,
-  title: `React part + ${i}`,
-  avatar: 'https://joeschmoe.io/api/v1/random',
-  description: 'Ant Design, a design language for background applications',
-  content:
-    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-}));
-
 const IconText = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
   <Space>
     {icon}
@@ -25,11 +17,9 @@ const IconText = ({ icon, text }: { icon: React.ReactNode; text: string }) => (
   </Space>
 );
 
-const DocList: React.FC<DocListProps> = (props) => {
-  const { list = data } = props;
-
+const DocList: React.FC<DocListProps> = () => {
   return (
-    <List
+    <ProList<any>
       itemLayout="vertical"
       size="large"
       pagination={{
@@ -39,12 +29,14 @@ const DocList: React.FC<DocListProps> = (props) => {
         pageSize: 6,
       }}
       className={styles.docList}
-      dataSource={list}
+      request={async (params = {}) => {
+        return (await getArticlesAll(params)) || [];
+      }}
       renderItem={(item) => (
         <List.Item
           key={item.title}
           onClick={() => {
-            history.push('/detail');
+            history.push(`/detail/${item.id}`);
           }}
           actions={[
             <IconText
@@ -65,7 +57,7 @@ const DocList: React.FC<DocListProps> = (props) => {
           ]}
         >
           <List.Item.Meta
-            avatar={<Avatar src={item.avatar} />}
+            avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
             title={<a href={item.href}>{item.name}</a>}
           />
           <p>
@@ -73,7 +65,7 @@ const DocList: React.FC<DocListProps> = (props) => {
               <span className={styles.title}>{item.title}</span>
             </a>
           </p>
-          {item.content}
+          {item.description}
         </List.Item>
       )}
     />
